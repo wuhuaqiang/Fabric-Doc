@@ -70,15 +70,15 @@
           访问github网站并下载Fabric，地址为：https://github.com/hyperledger/fabric/tree/v1.4.3，
       然后拷贝到$GOPATH/src/github.com/hyperledger/这个目录下面。
 六、Fabric 镜像下载
-# docker pull hyperledger/fabric-peer:latest
-# docker pull hyperledger/fabric-orderer:latest
-# docker pull hyperledger/fabric-tools:latest
-# docker pull hyperledger/fabric-ccenv:latest
-# docker pull hyperledger/fabric-baseos:latest
-# docker pull hyperledger/fabric-kafka:latest
-# docker pull hyperledger/fabric-zookeeper:latest
-# docker pull hyperledger/fabric-couchdb:latest
-# docker pull hyperledger/fabric-ca:latest
+    # docker pull hyperledger/fabric-peer:latest
+    # docker pull hyperledger/fabric-orderer:latest
+    # docker pull hyperledger/fabric-tools:latest
+    # docker pull hyperledger/fabric-ccenv:latest
+    # docker pull hyperledger/fabric-baseos:latest
+    # docker pull hyperledger/fabric-kafka:latest
+    # docker pull hyperledger/fabric-zookeeper:latest
+    # docker pull hyperledger/fabric-couchdb:latest
+    # docker pull hyperledger/fabric-ca:latest
 注：
 配置加速镜像
     # mkdir -p /etc/docker
