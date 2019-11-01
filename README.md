@@ -98,4 +98,4 @@
   ![deploy](deploy.png)
   ####2.基于Raft共识搭建多机fabric网络
    #####主要是对每台虚拟机的各个节点进行网络配置，主要涉及的是配置文件。
-    因为在四台虚拟机的项目目录必须一样，所有在四台主机的家目录下执行相同的命令mkdir lpgsy来创建项目目录,并进入项目目录。
+    因为在四台虚拟机的项目目录必须一样，所以在四台虚拟机的/opt/gopath/src/github.com/hyperledger/fabric目录下执行相同的命令mkdir raft-example来创建项目目录,并进入项目目录。
