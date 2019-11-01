@@ -92,7 +92,10 @@
     2. 通道配置：用来定义raft集群的成员关系，以及raft协议相关的参数，例例如⼼心跳间隔、leader节点超时时间等。
     3. 需要注意的是，每个channel有属于它⾃己的raft集群。因此，在chennel中要指定raft节点，指定的方式是把raft节点的tls证书配置到channel的配置文件中。在系统通道和应用通道中的配置中，每个排序以consenter的形式列出来。下⾯有configtx.yaml中关于raft节点的配置。
     4. 必须开启TLS才能使用Raft排序
-  ####搭建基于Raft共识的多机fabric网络环境的说明与准备
+  ####1.搭建基于Raft共识的多机fabric网络环境的说明与准备
     在本次基于Raft共识搭建的fabric1.4.3网络环境中，准备搭建五个orderer节点、一个组织四个peer,一个CouchDB和一个fabric-ca.这里要说明一下，raft共识中同步的节点必须为奇数，因为在整个共识环境中每个节点都是follower，当他们感受到网络中没有leader节点向他们发送heartbeat的时候，他们就会变成candidater，这时候需要他们之间相互投票才能将自己由candidater变成leader，达成一致的过程需要整个网络中有n/2+1个节点达成一致，整个网络才会达成一致，所以需要奇数个同步节点，在leader选举出来之后通过leader与客户端交互，将本地的log同步到各个follower。
   ####本文一共用到四台虚拟机，每台主机均是Centos7系统，各个主机的IP以及节点分配情况见下表：
   ![deploy](deploy.png)
+  ####2.基于Raft共识搭建多机fabric网络
+   #####主要是对每台虚拟机的各个节点进行网络配置，主要涉及的是配置文件。
+    因为在四台虚拟机的项目目录必须一样，所有在四台主机的家目录下执行相同的命令mkdir lpgsy来创建项目目录,并进入项目目录。
