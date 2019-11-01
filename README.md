@@ -95,6 +95,4 @@
   ####搭建基于Raft共识的多机fabric网络环境的说明与准备
     在本次基于Raft共识搭建的fabric1.4.3网络环境中，准备搭建五个orderer节点、一个组织四个peer,一个CouchDB和一个fabric-ca.这里要说明一下，raft共识中同步的节点必须为奇数，因为在整个共识环境中每个节点都是follower，当他们感受到网络中没有leader节点向他们发送heartbeat的时候，他们就会变成candidater，这时候需要他们之间相互投票才能将自己由candidater变成leader，达成一致的过程需要整个网络中有n/2+1个节点达成一致，整个网络才会达成一致，所以需要奇数个同步节点，在leader选举出来之后通过leader与客户端交互，将本地的log同步到各个follower。
   ####本文一共用到四台虚拟机，每台主机均是Centos7系统，各个主机的IP以及节点分配情况见下表：
-<p align="center">
-  <img width="320" src="https://github.com/wuhuaqiang/Fabric-Doc/blob/master/%E9%83%A8%E7%BD%B2%E5%9B%BE.png">
-</p>
+  ![deploy](deploy.png)
