@@ -99,3 +99,194 @@
   ####2.基于Raft共识搭建多机fabric网络
    #####主要是对每台虚拟机的各个节点进行网络配置，主要涉及的是配置文件。
     因为在四台虚拟机的项目目录必须一样，所以在四台虚拟机的/opt/gopath/src/github.com/hyperledger/fabric目录下执行相同的命令mkdir raft-example来创建项目目录,并进入项目目录。
+    1.第一台虚拟机：10.168.1.136
+        (1)在项目目录中执行命令vim crypto-config.yaml,并将下列代码块中的内容粘贴到文件中，生成yaml文件。
+            OrdererOrgs:		            # 排序节点的组织定义
+               - Name: Orderer	        	# orderer节点的名称
+                 Domain: example.com	    # orderer节点的根域名
+                 Specs:			            # orderer节点的主机名
+                   - Hostname: orderer0
+                   - Hostname: orderer1
+                   - Hostname: orderer2
+                   - Hostname: orderer3
+                   - Hostname: orderer4
+             PeerOrgs:			            # peer节点的组织定义
+               - Name: Org1		            # 组织1的名称
+                 Domain: org1.example.com	# 组织1的根域名
+                 EnableNodeOUs: true	    # 是否显示节点的详细信息
+                 Template:
+                   Count: 4	    	        # 组织1中的节点(peer)数目
+                 Users:
+                   Count: 4		            # 组织1中的用户数目
+        (2)执行命令cryptogen generate --config ./crypto-config.yaml生成各个节点的证书。
+        (3)执行命令vim configtx.yaml，并将下列代码块中的内容粘贴到文件中。
+             ---
+             Organizations:
+                 - &OrdererOrg			# orderer节点配置信息
+                     Name: OrdererOrg		# orderer节点名称
+                     ID: OrdererMSP		# orderer节点ID
+                     MSPDir: crypto-config/ordererOrganizations/example.com/msp	# msp文件路径
+                     Policies:
+                       Readers:
+                           Type: Signature
+                           Rule: "OR('OrdererMSP.member')"
+                       Writers:
+                           Type: Signature
+                           Rule: "OR('OrdererMSP.member')"
+                       Admins:
+                           Type: Signature
+                           Rule: "OR('OrdererMSP.admin')"
+                 - &Org1			# 组织
+                     Name: Org1MSP		# 组织名称
+                     ID: Org1MSP			# 组织ID
+                     MSPDir: crypto-config/peerOrganizations/org1.example.com/msp	# 组织msp文件路径
+                     AnchorPeers:			# 访问组织的域名和端口
+                         - Host: peer0.org1.example.com
+                           Port: 7051
+                     Policies:
+                       Readers:
+                           Type: Signature
+                           Rule: "OR('Org1MSP.admin','Org1MSP.peer','Org1MSP.client')"
+                       Writers:
+                           Type: Signature
+                           Rule: "OR('Org1MSP.admin','Org1MSP.client')"
+                       Admins:
+                           Type: Signature
+                           Rule: "OR('Org1MSP.admin')"
+             Capabilities:
+                 Channel: &ChannelCapabilities
+                     V1_3: true
+                 Orderer: &OrdererCapabilities
+                     V1_1: true
+                 Application: &ApplicationCapabilities
+                     V1_3: true
+                     V1_2: false
+                     V1_1: false
+             Application: &ApplicationDefaults
+                 Organizations:
+                 Policies:
+                     Readers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Readers"
+                     Writers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Writers"
+                     Admins:
+                         Type: ImplicitMeta
+                         Rule: "MAJORITY Admins"
+                 Capabilities:
+                     <<: *ApplicationCapabilities
+             Orderer: &OrdererDefaults
+                 OrdererType: solo
+                 Addresses:
+                     - orderer0.example.com:7050
+                 BatchTimeout: 2s
+                 BatchSize:
+                     MaxMessageCount: 200
+                     AbsoluteMaxBytes: 2 MB
+                     PreferredMaxBytes: 512 KB
+                 Kafka:
+                     Brokers:
+                     - 127.0.0.1:9092
+                 Organizations:
+                 Policies:
+                     Readers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Readers"
+                     Writers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Writers"
+                     Admins:
+                         Type: ImplicitMeta
+                         Rule: "MAJORITY Admins"
+                     BlockValidation:
+                         Type: ImplicitMeta
+                         Rule: "ANY Writers"
+             Channel: &ChannelDefaults
+                 Policies:
+                     Readers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Readers"
+                     Writers:
+                         Type: ImplicitMeta
+                         Rule: "ANY Writers"
+                     Admins:
+                         Type: ImplicitMeta
+                         Rule: "MAJORITY Admins"
+                 Capabilities:
+                     <<: *ChannelCapabilities
+             Profiles:                                                              # 定义系统通道和应用通道配置信息,从Profiles获取-profile后边的参数
+                 TwoOrgsOrdererGenesis:			#组织定义标识符，可自定义               # 系统通道配置标识符,自定义
+                     <<: *ChannelDefaults			# 引用上面 ChannelDefaults 的属性   # 具体通道相关配置信息引用ChannelDefaults
+                     Capabilities:
+                         <<: *ChannelCapabilities		# 引用 ChannelCapabilities 的属性
+                     Orderer:				# 配置属性，系统关键字，不能修改     # 系统通道配置信息
+                         <<: *OrdererDefaults			# 引用上面 OrdererDefaults 的属性    # 具体配置信息引用OrdererDefaults
+                         OrdererType: etcdraft			#指定排序共识
+                         EtcdRaft:
+                             Consenters:
+                             - Host: orderer0.example.com
+                               Port: 7050
+                               ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
+                               ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
+                             - Host: orderer1.example.com
+                               Port: 7050
+                               ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+                               ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+                             - Host: orderer2.example.com
+                               Port: 7050
+                               ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+                               ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+                             - Host: orderer3.example.com
+                               Port: 7050
+                               ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+                               ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+                             - Host: orderer4.example.com
+                               Port: 8050
+                               ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
+                               ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
+                         Addresses:
+                             - orderer0.example.com:7050
+                             - orderer1.example.com:7050
+                             - orderer2.example.com:7050
+                             - orderer3.example.com:7050
+                             - orderer4.example.com:8050
+                         Organizations:                              # 系统通道组织
+                         - *OrdererOrg		# 引用上面为 OrdererOrg 的属性   # 具体配置信息引用OrdererOrg
+                         Capabilities:                                                                                     # 定义系统通道全局功能特性
+                             <<: *OrdererCapabilities	#引用上面为 OrdererCapabilities 的属性        # 具体通道排序配置信息引用OrdererCapabilities
+                     Application:                                       # 系统通道信息
+                         <<: *ApplicationDefaults               # 具体应用通道配置信息引用ApplicationDefaults
+                         Organizations:                              # 系统通道组织
+                         - <<: *OrdererOrg                         # 具体配置信息引用OrdererOrg
+                     Consortiums:			# 定义了系统中包含的组织                           # 联盟列表
+                         SampleConsortium:                       # 联盟名称
+                             Organizations:		# 系统中包含的组织                                    # 联盟的组织列表
+                                 - *Org1			# 引用了上面的配置
+                 TwoOrgsChannel:                                 # 应用通道配置标识符,自定义
+                     Consortium: SampleConsortium        # 应用通道关联的联盟名称
+                     <<: *ChannelDefaults                      # 具体通道相关配置信息引用ChannelDefaults
+                     Application:                                     # 应用通道信息
+                         <<: *ApplicationDefaults             # 具体应用通道配置信息引用ApplicationDefaults
+                         Organizations:                             # 联盟的组织列表
+                             - *Org1
+                         Capabilities:                               # 定义应用通道全局功能特性
+                             <<: *ApplicationCapabilities    # 具体应用通道配置
+        (4)执行命令mkdir channel-artifacts创建文件夹，用来保存通过yaml文件以及系统通道生成的创世块文件。
+        (5)执行命令configtxgen -profile TwoOrgsOrdererGenesis -channelID systemchannel -outputBlock ./channel-artifacts/genesis.block生成系统文件的创世块。
+        (6)执行命令configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/evtpchannel.tx -channelID evtpchannel生成用于创建应用通道的通道文件
+        (7)接着将整个项目目录raft-example中的文件拷贝到其他的三台虚拟机上，在其他三台虚拟机的项目目录下执行命令。
+            #scp -r raft-example root@10.168.1.137:/opt/gopath/src/github.com/hyperledger/fabric
+            #scp -r raft-example root@10.168.1.138:/opt/gopath/src/github.com/hyperledger/fabric
+            #scp -r raft-example root@10.168.1.139:/opt/gopath/src/github.com/hyperledger/fabric
+        (8)执行命令vi docker-compose-orderer.yaml,并编辑文件内容。
+        (9)执行命令vi docker-compose-peer.yaml，并编辑文件内容。
+        (10)执行命令vi docker-compose-cli.yaml,并编辑文件内容。
+        (11)执行命令vi docker-compose-couchdb0.yaml,并编辑文件内容。
+        (12)执行命令vi docker-compose-ca.yaml,并编辑文件内容。
+####备注：－－－后边三台服务器参考前面这台服务器配置相应节点。
+            各个主机进行交互时，主机名的解析会影响交互速度，所以我们在/etc/hosts中将ip与主机名绑定起来，执行vi /etc/hosts.添加ip和主机名对应列表。
+            配置完成后使用docker-compose创建docker容器并运行：
+            例如:docker-compose -f ../docker-compose-orderer.yaml up -d
+        
+          
