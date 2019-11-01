@@ -115,9 +115,11 @@
         (10)执行命令vi docker-compose-cli.yaml,并编辑文件内容，生成yaml文件。
         (11)执行命令vi docker-compose-couchdb0.yaml,并编辑文件内容，生成yaml文件。
         (12)执行命令vi docker-compose-ca.yaml,并编辑文件内容，生成yaml文件。
-####备注：－－－后边三台服务器参考前面这台服务器配置相应节点。
-            各个主机进行交互时，主机名的解析会影响交互速度，所以我们在/etc/hosts中将ip与主机名绑定起来，执行vi /etc/hosts.添加ip和主机名对应列表。
-            配置完成后使用docker-compose创建docker容器并运行：
-            例如:docker-compose -f ../docker-compose-orderer.yaml up -d
+####备注：
+        后边三台服务器参考前面这台服务器配置相应节点。
+        各个主机进行交互时，主机名的解析会影响交互速度，所以我们在/etc/hosts中将ip与主机名绑定起来，执行vi /etc/hosts.添加ip和主机名对应列表。
+        配置完成后使用docker-compose创建docker容器并运行：
+        例如:docker-compose -f ../docker-compose-orderer.yaml up -d
+        编写sdk和智能合约(区块链应用)
         
           
