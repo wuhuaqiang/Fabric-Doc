@@ -20,7 +20,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     volumes:
       - /var/run/:/host/var/run/
-      - ./chaincode/go/:/opt/gopath/src/github.com/hyperledger/fabric/raft-example/chaincode/go
+      - ./chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/raft-example/chaincode
       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     extra_hosts:
