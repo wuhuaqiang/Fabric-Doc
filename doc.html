@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>Markdown在线编辑器 - www.MdEditor.com</title>
+    <link rel="shortcut icon" href="https://www.mdeditor.com/images/logos/favicon.ico" type="image/x-icon"/>
+</head>
+<body><h1 id="h1-fabric-doc-centos7-"><a name="Fabric-Doc（该教程为Centos7操作系统）" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>Fabric-Doc（该教程为Centos7操作系统）</h1><h4 id="h4--docker-"><a
+        name="一、Docker安装" class="reference-link"></a><span class="header-link octicon octicon-link"></span>一、Docker安装
+</h4><h6 id="h6-docker-linux-"><a
+        name="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。"
+        class="reference-link"></a><span class="header-link octicon octicon-link"></span>Docker
+    是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。</h6>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">安装步骤：</span></code></li><li
+        class="L1"><code><span class="pln"> </span><span class="lit">1.</span><span class="pln"> yum</span><span
+        class="pun">-</span><span class="pln">utils</span><span class="pun">提供</span><span class="pln">yum</span><span
+        class="pun">-</span><span class="pln">config</span><span class="pun">-</span><span
+        class="pln">manager</span><span class="pun">工具，设备映射存储驱动需要</span><span class="pln">device</span><span
+        class="pun">-</span><span class="pln">mapper</span><span class="pun">-</span><span class="pln">persistent</span><span
+        class="pun">-</span><span class="pln">data</span><span class="pun">和</span><span class="pln">lvm2</span><span
+        class="pun">工具</span></code></li><li class="L2"><code><span class="pln"> </span><span class="com"># yum install -y yum-utils device-mapper-persistent-data lvm2</span></code></li><li
+        class="L3"><code><span class="pln"> </span><span class="lit">2.</span><span class="pln"> </span><span
+        class="pun">设置稳定存储库</span></code></li><li class="L4"><code><span class="pln"> </span><span class="com"># yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span></code></li><li
+        class="L5"><code><span class="pln"> </span><span class="lit">3.</span><span class="pln"> </span><span
+        class="pun">开启</span><span class="pln">edge</span></code></li><li class="L6"><code><span
+        class="pln"> </span><span class="com"># yum-config-manager --enable docker-ce-edge</span></code></li><li
+        class="L7"><code><span class="pln"> </span><span class="lit">4.</span><span class="pln"> </span><span
+        class="pun">开启</span><span class="pln">test</span></code></li><li class="L8"><code><span
+        class="pln"> </span><span class="com"># yum-config-manager --enable docker-ce-test</span></code></li><li
+        class="L9"><code><span class="pln"> </span><span class="lit">5.</span><span class="pln"> </span><span
+        class="pun">安装</span><span class="pln">docker</span><span class="pun">-</span><span class="pln">ce</span></code></li><li
+        class="L0"><code><span class="pln"> </span><span class="com"># yum install docker-ce</span></code></li><li
+        class="L1"><code><span class="pln"> </span><span class="lit">6.</span><span class="pln"> </span><span
+        class="pun">运行</span><span class="pln">docker</span></code></li><li class="L2"><code><span
+        class="pln"> </span><span class="com"># systemctl start docker</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="lit">7.</span><span class="pln"> </span><span class="pun">查看</span><span
+        class="pln">docker</span><span class="pun">版本，判断是否安装成功</span></code></li><li class="L4"><code><span
+        class="pln"> </span><span class="com"># docker -version</span></code></li><li class="L5"><code><span
+        class="pln"> </span><span class="lit">8.</span><span class="pln"> </span><span class="pun">设置开机自启动</span></code></li><li
+        class="L6"><code><span class="pln"> </span><span class="com"># chkconfig docker on</span></code></li></ol></pre>
+<h4 id="h4--docker-compose-"><a name="二、 Docker-Compose安装" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>二、 Docker-Compose安装</h4><h6 id="h6-docker-compose-docker-"><a
+        name="Docker-Compose 是用来定义和运行复杂应用的Docker工具。可以在一个文件中定义一个多容器应用和容器依赖，并且使用一条命令来启动你的应用，完成一切准备工作。"
+        class="reference-link"></a><span class="header-link octicon octicon-link"></span>Docker-Compose
+    是用来定义和运行复杂应用的Docker工具。可以在一个文件中定义一个多容器应用和容器依赖，并且使用一条命令来启动你的应用，完成一切准备工作。</h6>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">安装步骤：</span></code></li><li
+        class="L1"><code><span class="pln"> </span><span class="lit">1.</span><span class="pln"> </span><span
+        class="pun">下载最新版本</span><span class="pln">docker</span><span class="pun">-</span><span
+        class="pln">compose</span><span class="pun">到/</span><span class="pln">usr</span><span class="pun">/</span><span
+        class="kwd">local</span><span class="pun">/</span><span class="pln">bin</span><span class="pun">/</span><span
+        class="pln">docker</span><span class="pun">-</span><span class="pln">compose</span><span class="pun">目录下</span></code></li><li
+        class="L2"><code><span class="pln"> </span><span class="com"># curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose</span></code></li><li
+        class="L3"><code><span class="pln"> </span><span class="lit">2.</span><span class="pln"> </span><span
+        class="pun">设置/</span><span class="pln">usr</span><span class="pun">/</span><span class="kwd">local</span><span
+        class="pun">/</span><span class="pln">bin</span><span class="pun">/</span><span class="pln">docker</span><span
+        class="pun">-</span><span class="pln">compose</span><span class="pun">目录为可执行权限</span></code></li><li class="L4"><code><span
+        class="pln"> </span><span class="com"># chmod +x /usr/local/bin/docker-compose</span></code></li><li class="L5"><code><span
+        class="pln"> </span><span class="lit">3.</span><span class="pln"> </span><span class="pun">测试</span><span
+        class="pln">docker</span><span class="pun">-</span><span class="pln">compose</span><span
+        class="pun">安装是否成功</span></code></li><li class="L6"><code><span class="pln"> </span><span class="com"># docker-compose -version</span></code></li></ol></pre>
+<h4 id="h4--go-"><a name="三、GO语言环境安装" class="reference-link"></a><span class="header-link octicon octicon-link"></span>三、GO语言环境安装
+</h4><h6 id="h6-go-2009-go-c-c-"><a
+        name="Go语言是谷歌2009发布的第二款开源编程语言，专门针对多处理器系统应用程序的编程进行了优化，使用Go编译的程序可以媲美C或C++代码的速度，而且更加安全、支持并行进程。"
+        class="reference-link"></a><span class="header-link octicon octicon-link"></span>Go语言是谷歌2009发布的第二款开源编程语言，专门针对多处理器系统应用程序的编程进行了优化，使用Go编译的程序可以媲美C或C++代码的速度，而且更加安全、支持并行进程。
+</h6>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">安装步骤：</span></code></li><li
+        class="L1"><code><span class="lit">1.</span><span class="pln"> </span><span class="pun">下载并安装</span><span
+        class="pln">GO</span><span class="pun">语言环境</span></code></li><li class="L2"><code><span
+        class="pln"> </span><span class="com"># cd /opt</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="com"># mkdir golang</span></code></li><li class="L4"><code><span
+        class="pln"> </span><span class="com"># cd golang</span></code></li><li class="L5"><code><span
+        class="pln"> </span><span class="com"># yum install wget</span></code></li><li class="L6"><code><span
+        class="pln"> </span><span
+        class="com"># wget https://studygolang.com/dl/golang/go1.10.3.linux-amd64.tar.gz</span></code></li><li
+        class="L7"><code><span class="pln"> </span><span
+        class="com"># tar -zxvf go1.10.3.linux-amd64.tar.gz</span></code></li><li class="L8"><code><span
+        class="lit">2.</span><span class="pln"> </span><span class="pun">配置</span><span class="pln">GO</span><span
+        class="pun">语言环境变量</span></code></li><li class="L9"><code><span class="pln"> </span><span class="com"># vi /etc/profile</span></code></li><li
+        class="L0"><code><span class="pln"> </span><span class="pun">添加如下内容到/</span><span class="pln">etc</span><span
+        class="pun">/</span><span class="pln">profile</span><span class="pun">后面</span></code></li><li class="L1"><code><span
+        class="pln"> </span><span class="kwd">export</span><span class="pln"> GOPATH</span><span
+        class="pun">=</span><span class="str">/opt/</span><span class="pln">gopath</span></code></li><li
+        class="L2"><code><span class="pln"> </span><span class="kwd">export</span><span class="pln"> GOROOT</span><span
+        class="pun">=</span><span class="str">/opt/</span><span class="pln">golang</span><span class="pun">/</span><span
+        class="pln">go</span></code></li><li class="L3"><code><span class="pln"> </span><span
+        class="kwd">export</span><span class="pln"> PATH</span><span class="pun">=</span><span
+        class="pln">$GOROOT</span><span class="pun">/</span><span class="pln">bin</span><span class="pun">:</span><span
+        class="pln">$PATH</span></code></li><li class="L4"><code><span class="pln"> </span><span class="com"># source /etc/profile</span></code></li><li
+        class="L5"><code><span class="lit">3.</span><span class="pln"> </span><span class="pun">查看</span><span
+        class="pln">GO</span><span class="pun">语言版本</span></code></li><li class="L6"><code><span
+        class="pln"> </span><span class="com"># go version</span></code></li><li class="L7"><code><span
+        class="lit">4.</span><span class="pln"> </span><span class="pun">查看</span><span class="pln">GO</span><span
+        class="pun">语言环境变量</span></code></li><li class="L8"><code><span class="pln"> </span><span
+        class="com"># go env</span></code></li></ol></pre>
+<h4 id="h4--git-"><a name="四、Git安装" class="reference-link"></a><span class="header-link octicon octicon-link"></span>四、Git安装
+</h4><h6 id="h6-git-"><a name="Git是一个开源的分布式版本控制系统，可以有效、高速的处理各类大小项目版本管理。" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>Git是一个开源的分布式版本控制系统，可以有效、高速的处理各类大小项目版本管理。</h6>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="com"># yum install git</span></code></li></ol></pre>
+<h4 id="h4--fabric-"><a name="五、Fabric安装" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>五、Fabric安装</h4><h6 id="h6-fabric-git-"><a
+        name="Fabric安装可以有两种方式，一种通过Git安装，一种通过手动下载安装。" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>Fabric安装可以有两种方式，一种通过Git安装，一种通过手动下载安装。</h6>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span
+        class="lit">1.</span><span class="pln"> </span><span class="pun">[</span><span class="typ">Git</span><span
+        class="pun">安装]</span></code></li><li class="L1"><code><span class="pln"> </span><span class="pun">安装步骤：</span></code></li><li
+        class="L2"><code><span class="pln"> </span><span class="lit">1</span><span class="pun">）</span><span
+        class="pln"> </span><span class="pun">生成目录</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="com"># mkdir -p $GOPATH/src/github.com/hyperledger/</span></code></li><li
+        class="L4"><code><span class="pln"> </span><span
+        class="com"># cd $GOPATH/src/github.com/hyperledger/</span></code></li><li class="L5"><code><span
+        class="pln"> </span><span class="lit">2</span><span class="pun">）</span><span class="pln"> </span><span
+        class="typ">Git</span><span class="pun">克隆源码</span></code></li><li class="L6"><code><span
+        class="pln"> </span><span class="com"># git clone https://github.com/hyperledger/fabric.git</span></code></li><li
+        class="L7"><code><span class="pln"> </span><span class="com"># cd fabric</span></code></li><li class="L8"><code><span
+        class="pln"> </span><span class="lit">3</span><span class="pun">）</span><span class="pln"> </span><span
+        class="pun">切换</span><span class="typ">Fabric</span><span class="pun">版本</span></code></li><li class="L9"><code><span
+        class="pln"> </span><span class="com"># git checkout v1.4.3</span></code></li><li class="L0"><code><span
+        class="lit">2.</span><span class="pln"> </span><span class="pun">[手动安装]</span></code></li><li
+        class="L1"><code><span class="pln"> </span><span class="pun">访问</span><span class="pln">github</span><span
+        class="pun">网站并下载</span><span class="typ">Fabric</span><span class="pun">，地址为：</span><span
+        class="pln">https</span><span class="pun">:</span><span
+        class="com">//github.com/hyperledger/fabric/tree/v1.4.3，</span></code></li><li class="L2"><code><span
+        class="pln"> </span><span class="pun">然后拷贝到</span><span class="pln">$GOPATH</span><span
+        class="pun">/</span><span class="pln">src</span><span class="pun">/</span><span class="pln">github</span><span
+        class="pun">.</span><span class="pln">com</span><span class="pun">/</span><span
+        class="pln">hyperledger</span><span class="pun">/这个目录下面。</span></code></li></ol></pre>
+<h4 id="h4--fabric-"><a name="六、Fabric 镜像下载" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>六、Fabric 镜像下载</h4>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span
+        class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span class="pun">/</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">peer</span><span class="pun">:</span><span
+        class="pln">latest</span></code></li><li class="L1"><code><span class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span
+        class="pun">/</span><span class="pln">fabric</span><span class="pun">-</span><span
+        class="pln">orderer</span><span class="pun">:</span><span class="pln">latest</span></code></li><li
+        class="L2"><code><span class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span
+        class="pun">/</span><span class="pln">fabric</span><span class="pun">-</span><span class="pln">tools</span><span
+        class="pun">:</span><span class="pln">latest</span></code></li><li class="L3"><code><span
+        class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span class="pun">/</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">ccenv</span><span class="pun">:</span><span
+        class="pln">latest</span></code></li><li class="L4"><code><span class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span
+        class="pun">/</span><span class="pln">fabric</span><span class="pun">-</span><span
+        class="pln">baseos</span><span class="pun">:</span><span class="pln">latest</span></code></li><li
+        class="L5"><code><span class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span
+        class="pun">/</span><span class="pln">fabric</span><span class="pun">-</span><span class="pln">kafka</span><span
+        class="pun">:</span><span class="pln">latest</span></code></li><li class="L6"><code><span
+        class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span class="pun">/</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">zookeeper</span><span
+        class="pun">:</span><span class="pln">latest</span></code></li><li class="L7"><code><span
+        class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span class="pun">/</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">couchdb</span><span
+        class="pun">:</span><span class="pln">latest</span></code></li><li class="L8"><code><span
+        class="pun">-#</span><span class="pln"> docker pull hyperledger</span><span class="pun">/</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">ca</span><span class="pun">:</span><span
+        class="pln">latest</span></code></li></ol></pre>
+<h4 id="h4-u914Du7F6Eu52A0u901Fu955Cu50CF"><a name="配置加速镜像" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>配置加速镜像</h4>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="com"># mkdir -p /etc/docker</span></code></li><li
+        class="L1"><code><span class="com"># tee /etc/docker/daemon.json &lt;&lt;-'EOF'</span></code></li><li
+        class="L2"><code><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="str">"registry-mirrors"</span><span class="pun">:</span><span
+        class="pln"> </span><span class="pun">[</span><span
+        class="str">"https://8w1wqmsz.mirror.aliyuncs.com"</span><span class="pun">]</span></code></li><li
+        class="L4"><code><span class="pln"> </span><span class="pun">}</span></code></li><li class="L5"><code><span
+        class="pln"> EOF</span></code></li><li class="L6"><code><span
+        class="com"># systemctl daemon-reload</span></code></li><li class="L7"><code><span class="com"># systemctl restart docker</span></code></li></ol></pre>
+<h1 id="h1-fabric1-4-3raft-"><a name="fabric1.4.3raft网络搭建" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>fabric1.4.3raft网络搭建</h1>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span
+        class="pun">基于</span><span class="typ">Raft</span><span class="pun">共识算法搭建多机</span><span
+        class="typ">Fabric1</span><span class="pun">.</span><span class="lit">4.3</span><span
+        class="pun">网络</span></code></li><li class="L1"><code><span class="pun">在</span><span class="pln">fabric1</span><span
+        class="pun">.</span><span class="lit">4.3</span><span class="pun">的版本中，提供了基于</span><span class="pln">raft</span><span
+        class="pun">共识的</span><span class="pln">raft</span><span class="pun">排序服务。</span><span
+        class="pln">raft</span><span class="pun">的模型可以容忍奔溃，如果有节点故障掉线可以正常运行。前提是要有大多数存活，也就是要保证</span><span
+        class="lit">1</span><span class="pun">/</span><span class="lit">2</span><span
+        class="pun">以上的节点个数正常运行。</span><span class="pln">raft</span><span
+        class="pun">共识是“主从模型”，主节点通过动态选举决定，从节点是主节点的复制。</span><span class="pln">raft</span><span
+        class="pun">排序服务比</span><span class="pln">kafka</span><span class="pun">排序服务易于设置和管理。并且</span><span class="pln">raft</span><span
+        class="pun">的设计允许不同的组织贡献节点来共同组成排序服务。</span><span class="pln">raft</span><span class="pun">排序是</span><span
+        class="pln">fabric</span><span class="pun">实现拜占庭容错排序服务的第⼀步，如我们所见，开发</span><span class="pln">raft</span><span
+        class="pun">排序服务的决定也是基于此的。</span><span class="pln">raft</span><span class="pun">节点之间通过使⽤用</span><span
+        class="pln">TLS</span><span class="pun">认证身份，如果一个攻击者想要伪造</span><span class="pln">raft</span><span class="pun">节点，就必须要获得⼀个有效的证书和对应的私钥。所以，没有⼀个有效的</span><span
+        class="pln">TLS</span><span class="pun">证书，是不可能运行</span><span class="pln">raft</span><span
+        class="pun">节点的。</span><span class="pln"> </span><span class="pun">要使用</span><span class="pln">raft</span><span
+        class="pun">共识，需要修改两个地⽅：</span></code></li><li class="L2"><code><span class="lit">1.</span><span
+        class="pln"> </span><span class="pun">本地配置：用来控制节点的特性，例例如</span><span class="pln">TLS</span><span class="pun">配置，备份个数和⽂文件存储。</span></code></li><li
+        class="L3"><code><span class="lit">2.</span><span class="pln"> </span><span class="pun">通道配置：用来定义</span><span
+        class="pln">raft</span><span class="pun">集群的成员关系，以及</span><span class="pln">raft</span><span class="pun">协议相关的参数，例例如⼼心跳间隔、</span><span
+        class="pln">leader</span><span class="pun">节点超时时间等。</span></code></li><li class="L4"><code><span
+        class="lit">3.</span><span class="pln"> </span><span class="pun">需要注意的是，每个</span><span
+        class="pln">channel</span><span class="pun">有属于它⾃己的</span><span class="pln">raft</span><span
+        class="pun">集群。因此，在</span><span class="pln">chennel</span><span class="pun">中要指定</span><span
+        class="pln">raft</span><span class="pun">节点，指定的方式是把</span><span class="pln">raft</span><span
+        class="pun">节点的</span><span class="pln">tls</span><span class="pun">证书配置到</span><span class="pln">channel</span><span
+        class="pun">的配置文件中。在系统通道和应用通道中的配置中，每个排序以</span><span class="pln">consenter</span><span
+        class="pun">的形式列出来。下⾯有</span><span class="pln">configtx</span><span class="pun">.</span><span
+        class="pln">yaml</span><span class="pun">中关于</span><span class="pln">raft</span><span class="pun">节点的配置。</span></code></li><li
+        class="L5"><code><span class="lit">4.</span><span class="pln"> </span><span class="pun">必须开启</span><span
+        class="pln">TLS</span><span class="pun">才能使用</span><span class="typ">Raft</span><span
+        class="pun">排序</span></code></li></ol></pre>
+<h4 id="h4-1-raft-fabric-"><a name="1.搭建基于Raft共识的多机fabric网络环境的说明与准备" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>1.搭建基于Raft共识的多机fabric网络环境的说明与准备</h4>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">在本次基于</span><span
+        class="typ">Raft</span><span class="pun">共识搭建的</span><span class="pln">fabric1</span><span
+        class="pun">.</span><span class="lit">4.3</span><span class="pun">网络环境中，准备搭建五个</span><span
+        class="pln">orderer</span><span class="pun">节点、一个组织四个</span><span class="pln">peer</span><span
+        class="pun">,一个</span><span class="typ">CouchDB</span><span class="pun">和一个</span><span
+        class="pln">fabric</span><span class="pun">-</span><span class="pln">ca</span><span class="pun">.这里要说明一下，</span><span
+        class="pln">raft</span><span class="pun">共识中同步的节点必须为奇数，因为在整个共识环境中每个节点都是</span><span
+        class="pln">follower</span><span class="pun">，当他们感受到网络中没有</span><span class="pln">leader</span><span
+        class="pun">节点向他们发送</span><span class="pln">heartbeat</span><span class="pun">的时候，他们就会变成</span><span
+        class="pln">candidater</span><span class="pun">，这时候需要他们之间相互投票才能将自己由</span><span
+        class="pln">candidater</span><span class="pun">变成</span><span class="pln">leader</span><span class="pun">，达成一致的过程需要整个网络中有</span><span
+        class="pln">n</span><span class="pun">/</span><span class="lit">2</span><span class="pun">+</span><span
+        class="lit">1</span><span class="pun">个节点达成一致，整个网络才会达成一致，所以需要奇数个同步节点，在</span><span
+        class="pln">leader</span><span class="pun">选举出来之后通过</span><span class="pln">leader</span><span class="pun">与客户端交互，将本地的</span><span
+        class="pln">log</span><span class="pun">同步到各个</span><span class="pln">follower</span><span class="pun">。</span></code></li></ol></pre>
+<h4 id="h4--centos7-ip-"><a name="本文一共用到四台虚拟机，每台主机均是Centos7系统，各个主机的IP以及节点分配情况见下表：" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>本文一共用到四台虚拟机，每台主机均是Centos7系统，各个主机的IP以及节点分配情况见下表：</h4>
+<p><img src="deploy.png" alt="deploy"></p><h4 id="h4-2-raft-fabric-"><a name="2.基于Raft共识搭建多机fabric网络"
+                                                                        class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>2.基于Raft共识搭建多机fabric网络</h4><h5 id="h5--"><a
+        name="主要是对每台虚拟机的各个节点进行网络配置，主要涉及的是配置文件。" class="reference-link"></a><span
+        class="header-link octicon octicon-link"></span>主要是对每台虚拟机的各个节点进行网络配置，主要涉及的是配置文件。</h5>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pun">因为在四台虚拟机的项目目录必须一样，所以在四台虚拟机的/</span><span
+        class="pln">opt</span><span class="pun">/</span><span class="pln">gopath</span><span class="pun">/</span><span
+        class="pln">src</span><span class="pun">/</span><span class="pln">github</span><span class="pun">.</span><span
+        class="pln">com</span><span class="pun">/</span><span class="pln">hyperledger</span><span
+        class="pun">/</span><span class="pln">fabric</span><span class="pun">目录下执行相同的命令</span><span class="pln">mkdir raft</span><span
+        class="pun">-</span><span class="pln">example</span><span class="pun">来创建项目目录,并进入项目目录。</span></code></li><li
+        class="L1"><code><span class="lit">1.</span><span class="pun">第一台虚拟机：</span><span class="lit">10.168</span><span
+        class="pun">.</span><span class="lit">1.136</span></code></li><li class="L2"><code><span
+        class="pln"> </span><span class="pun">(</span><span class="lit">1</span><span
+        class="pun">)在项目目录中执行命令</span><span class="pln">vim crypto</span><span class="pun">-</span><span class="pln">config</span><span
+        class="pun">.</span><span class="pln">yaml</span><span class="pun">,并编辑文件内容，生成</span><span
+        class="pln">yaml</span><span class="pun">文件。</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="pun">(</span><span class="lit">2</span><span class="pun">)执行命令</span><span
+        class="pln">cryptogen generate </span><span class="pun">--</span><span class="pln">config </span><span
+        class="pun">./</span><span class="pln">crypto</span><span class="pun">-</span><span
+        class="pln">config</span><span class="pun">.</span><span class="pln">yaml</span><span
+        class="pun">生成各个节点的证书。</span></code></li><li class="L4"><code><span class="pln"> </span><span
+        class="pun">(</span><span class="lit">3</span><span class="pun">)执行命令</span><span
+        class="pln">vim configtx</span><span class="pun">.</span><span class="pln">yaml</span><span class="pun">，并编辑文件内容，生成</span><span
+        class="pln">yaml</span><span class="pun">文件。</span></code></li><li class="L5"><code><span
+        class="pln"> </span><span class="pun">(</span><span class="lit">4</span><span class="pun">)执行命令</span><span
+        class="pln">mkdir channel</span><span class="pun">-</span><span class="pln">artifacts</span><span class="pun">创建文件夹，用来保存通过</span><span
+        class="pln">yaml</span><span class="pun">文件以及系统通道生成的创世块文件。</span></code></li><li class="L6"><code><span
+        class="pln"> </span><span class="pun">(</span><span class="lit">5</span><span class="pun">)执行命令</span><span
+        class="pln">configtxgen </span><span class="pun">-</span><span class="pln">profile </span><span class="typ">TwoOrgsOrdererGenesis</span><span
+        class="pln"> </span><span class="pun">-</span><span class="pln">channelID systemchannel </span><span
+        class="pun">-</span><span class="pln">outputBlock </span><span class="pun">./</span><span
+        class="pln">channel</span><span class="pun">-</span><span class="pln">artifacts</span><span class="pun">/</span><span
+        class="pln">genesis</span><span class="pun">.</span><span class="pln">block</span><span
+        class="pun">生成系统文件的创世块。</span></code></li><li class="L7"><code><span class="pln"> </span><span
+        class="pun">(</span><span class="lit">6</span><span class="pun">)执行命令</span><span
+        class="pln">configtxgen </span><span class="pun">-</span><span class="pln">profile </span><span class="typ">TwoOrgsChannel</span><span
+        class="pln"> </span><span class="pun">-</span><span class="pln">outputCreateChannelTx </span><span class="pun">./</span><span
+        class="pln">channel</span><span class="pun">-</span><span class="pln">artifacts</span><span class="pun">/</span><span
+        class="pln">evtpchannel</span><span class="pun">.</span><span class="pln">tx </span><span
+        class="pun">-</span><span class="pln">channelID evtpchannel</span><span
+        class="pun">生成用于创建应用通道的通道文件</span></code></li><li class="L8"><code><span class="pln"> </span><span
+        class="pun">(</span><span class="lit">7</span><span class="pun">)接着将整个项目目录</span><span
+        class="pln">raft</span><span class="pun">-</span><span class="pln">example</span><span class="pun">中的文件拷贝到其他的三台虚拟机上，在其他三台虚拟机的项目目录下执行命令。</span></code></li><li
+        class="L9"><code><span class="pln"> </span><span class="com">#scp -r raft-example root@10.168.1.137:/opt/gopath/src/github.com/hyperledger/fabric</span></code></li><li
+        class="L0"><code><span class="pln"> </span><span class="com">#scp -r raft-example root@10.168.1.138:/opt/gopath/src/github.com/hyperledger/fabric</span></code></li><li
+        class="L1"><code><span class="pln"> </span><span class="com">#scp -r raft-example root@10.168.1.139:/opt/gopath/src/github.com/hyperledger/fabric</span></code></li><li
+        class="L2"><code><span class="pln"> </span><span class="pun">(</span><span class="lit">8</span><span
+        class="pun">)执行命令</span><span class="pln">vi docker</span><span class="pun">-</span><span
+        class="pln">compose</span><span class="pun">-</span><span class="pln">orderer</span><span
+        class="pun">.</span><span class="pln">yaml</span><span class="pun">,并编辑文件内容，生成</span><span
+        class="pln">yaml</span><span class="pun">文件。</span></code></li><li class="L3"><code><span
+        class="pln"> </span><span class="pun">(</span><span class="lit">9</span><span class="pun">)执行命令</span><span
+        class="pln">vi docker</span><span class="pun">-</span><span class="pln">compose</span><span class="pun">-</span><span
+        class="pln">peer</span><span class="pun">.</span><span class="pln">yaml</span><span
+        class="pun">，并编辑文件内容，生成</span><span class="pln">yaml</span><span class="pun">文件。</span></code></li><li
+        class="L4"><code><span class="pln"> </span><span class="pun">(</span><span class="lit">10</span><span
+        class="pun">)执行命令</span><span class="pln">vi docker</span><span class="pun">-</span><span
+        class="pln">compose</span><span class="pun">-</span><span class="pln">cli</span><span class="pun">.</span><span
+        class="pln">yaml</span><span class="pun">,并编辑文件内容，生成</span><span class="pln">yaml</span><span
+        class="pun">文件。</span></code></li><li class="L5"><code><span class="pln"> </span><span class="pun">(</span><span
+        class="lit">11</span><span class="pun">)执行命令</span><span class="pln">vi docker</span><span
+        class="pun">-</span><span class="pln">compose</span><span class="pun">-</span><span
+        class="pln">couchdb0</span><span class="pun">.</span><span class="pln">yaml</span><span
+        class="pun">,并编辑文件内容，生成</span><span class="pln">yaml</span><span class="pun">文件。</span></code></li><li
+        class="L6"><code><span class="pln"> </span><span class="pun">(</span><span class="lit">12</span><span
+        class="pun">)执行命令</span><span class="pln">vi docker</span><span class="pun">-</span><span
+        class="pln">compose</span><span class="pun">-</span><span class="pln">ca</span><span class="pun">.</span><span
+        class="pln">yaml</span><span class="pun">,并编辑文件内容，生成</span><span class="pln">yaml</span><span
+        class="pun">文件。</span></code></li></ol></pre>
+<h4 id="h4--"><a name="备注：" class="reference-link"></a><span class="header-link octicon octicon-link"></span>备注：</h4>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span
+        class="pln"> </span><span class="pun">后边三台服务器参考前面这台服务器配置相应节点。</span></code></li><li class="L1"><code><span
+        class="pln"> </span><span class="pun">各个主机进行交互时，主机名的解析会影响交互速度，所以我们在/</span><span class="pln">etc</span><span
+        class="pun">/</span><span class="pln">hosts</span><span class="pun">中将</span><span class="pln">ip</span><span
+        class="pun">与主机名绑定起来，执行</span><span class="pln">vi </span><span class="pun">/</span><span class="pln">etc</span><span
+        class="pun">/</span><span class="pln">hosts</span><span class="pun">.添加</span><span class="pln">ip</span><span
+        class="pun">和主机名对应列表。</span></code></li><li class="L2"><code><span class="pln"> </span><span
+        class="pun">配置完成后使用</span><span class="pln">docker</span><span class="pun">-</span><span
+        class="pln">compose</span><span class="pun">创建</span><span class="pln">docker</span><span
+        class="pun">容器并运行：</span></code></li><li class="L3"><code><span class="pln"> </span><span class="pun">例如:</span><span
+        class="pln">docker</span><span class="pun">-</span><span class="pln">compose </span><span
+        class="pun">-</span><span class="pln">f </span><span class="pun">../</span><span class="pln">docker</span><span
+        class="pun">-</span><span class="pln">compose</span><span class="pun">-</span><span
+        class="pln">orderer</span><span class="pun">.</span><span class="pln">yaml up </span><span
+        class="pun">-</span><span class="pln">d</span></code></li><li class="L4"><code><span class="pln"> </span><span
+        class="pun">编写</span><span class="pln">sdk</span><span class="pun">和智能合约(区块链应用)</span></code></li></ol></pre>
+</body>
+</html>
